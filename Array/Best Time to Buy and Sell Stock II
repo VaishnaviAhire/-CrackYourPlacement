@@ -1,0 +1,19 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        if (prices == null || prices.length == 0) {
+            return 0; // No profit if no prices are available
+        }
+
+        int maxProfit = 0;
+
+        // Iterate through the prices array
+        for (int i = 1; i < prices.length; i++) {
+            // If the price increases, add the difference to the profit
+            if (prices[i] > prices[i - 1]) {
+                maxProfit += prices[i] - prices[i - 1];
+            }
+        }
+
+        return maxProfit;
+    }
+}

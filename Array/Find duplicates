@@ -1,0 +1,17 @@
+import java.util.*;
+
+class Solution {
+    public List<Integer> findDuplicates(int[] n) {
+        List<Integer> res = new ArrayList<>();
+        Arrays.sort(n); // Sort the array
+
+        // Loop through the array and check adjacent elements
+        for (int i = 1; i < n.length; i++) {
+            if (n[i] == n[i - 1]) {
+                res.add(n[i]);
+            }
+        }
+
+        return res;
+    }
+}

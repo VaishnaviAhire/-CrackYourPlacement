@@ -1,0 +1,29 @@
+import java.util.HashMap;
+
+class Solution {
+    public int subarraysDivByK(int[] n, int k) {
+        int currSum = 0;
+        int cnt = 0;
+        HashMap<Integer, Integer> freqMap = new HashMap<>();
+        freqMap.put(0, 1); // Initialize with 0 to handle subarrays starting at index 0
+
+        for (int num : n) {
+            currSum += num; // Update the current prefix sum
+            int mod = currSum % k;
+
+            // Adjust for negative mod values, Java's % can give negative results
+            if (mod < 0) {
+                mod += k;
+            }
+
+            // If the same mod value has occurred before, it means there is a subarray
+            // whose sum is divisible by k
+            cnt += freqMap.getOrDefault(mod, 0);
+
+            // Update the frequency map with the current mod value
+            freqMap.put(mod, freqMap.getOrDefault(mod, 0) + 1);
+        }
+
+        return cnt;
+    }
+}

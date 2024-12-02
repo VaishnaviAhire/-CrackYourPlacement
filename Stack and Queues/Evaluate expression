@@ -1,0 +1,48 @@
+
+class Solution {
+    // Function to evaluate a postfix expression.
+    public static int evaluatePostFix(String S) {
+        Stack<Integer> stk = new Stack<>();
+        
+        for (int i = 0; i < S.length(); i++) {
+            char ch = S.charAt(i);
+            
+            // Check if the character is a digit
+            if (Character.isDigit(ch)) {
+                // Push the numeric value of the digit to the stack
+                stk.push(Character.getNumericValue(ch));
+            } 
+            // Check if the character is an operator
+            else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+                if (stk.size() < 2) {
+                    throw new IllegalArgumentException("Invalid expression");
+                }
+                int op2 = stk.pop();
+                int op1 = stk.pop();
+                
+                switch (ch) {
+                    case '+':
+                        stk.push(op1 + op2);
+                        break;
+                    case '-':
+                        stk.push(op1 - op2);
+                        break;
+                    case '*':
+                        stk.push(op1 * op2);
+                        break;
+                    case '/':
+                        if (op2 != 0) {
+                            stk.push(op1 / op2);
+                        } else {
+                            throw new ArithmeticException("Division by zero");
+                        }
+                        break;
+                }
+            }
+        }
+        
+        // Final result should be the only element in the stack
+    
+        return stk.pop();
+    }
+}

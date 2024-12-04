@@ -1,0 +1,32 @@
+class Solution {
+    public int maxScore(int[] cardPoints, int k) {
+        int n = cardPoints.length;
+        int totalSum = 0;
+
+        // Calculate the total sum of the array
+        for (int points : cardPoints) {
+            totalSum += points;
+        }
+
+        // Size of the subarray we do not pick
+        int windowSize = n - k;
+        int currentWindowSum = 0;
+
+        // Compute the sum of the first window
+        for (int i = 0; i < windowSize; i++) {
+            currentWindowSum += cardPoints[i];
+        }
+
+        // Initialize minimum sum as the sum of the first window
+        int minSubarraySum = currentWindowSum;
+
+        // Slide the window across the array
+        for (int i = windowSize; i < n; i++) {
+            currentWindowSum += cardPoints[i] - cardPoints[i - windowSize];
+            minSubarraySum = Math.min(minSubarraySum, currentWindowSum);
+        }
+
+        // Maximum score is total sum minus the minimum subarray sum
+        return totalSum - minSubarraySum;
+    }
+}

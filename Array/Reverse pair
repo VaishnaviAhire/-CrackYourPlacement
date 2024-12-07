@@ -1,0 +1,70 @@
+class Solution {
+    public int reversePairs(int[] nums) {
+        if (nums == null || nums.length < 2) return 0;
+        return returnPairCnt(nums);
+    }
+    
+    int returnPairCnt(int[] nums) {
+        int[] temp = new int[nums.length]; // Temporary array to assist in merging
+        return mergeSort(nums, temp, 0, nums.length - 1);
+    }
+
+    // Helper method to perform merge sort and count reverse pairs
+    int mergeSort(int[] nums, int[] temp, int si, int ei) {
+        if (si >= ei) return 0; // Base case: a single element doesn't form a pair
+
+        int mid = (si + ei) / 2;
+        int count = 0;
+        
+        // Count reverse pairs in the left and right subarrays
+        count += mergeSort(nums, temp, si, mid);
+        count += mergeSort(nums, temp, mid + 1, ei);
+        
+        // Count reverse pairs between the left and right subarrays during merge
+        count += merge(nums, temp, si, ei, mid);
+        
+        return count;
+    }
+
+    // Merge two sorted subarrays and count reverse pairs
+    int merge(int[] nums, int[] temp, int si, int ei, int mid) {
+        int i = si, j = mid + 1, k = si;
+        int count = 0;
+        
+        // Count reverse pairs while merging the two halves
+        for (int left = si; left <= mid; left++) {
+            while (j <= ei && nums[left] > 2 * (long) nums[j]) {
+                j++;
+            }
+            count += (j - (mid + 1));
+        }
+        
+        // Merge the two sorted subarrays into temp
+        i = si;
+        j = mid + 1;
+        while (i <= mid && j <= ei) {
+            if (nums[i] <= nums[j]) {
+                temp[k++] = nums[i++];
+            } else {
+                temp[k++] = nums[j++];
+            }
+        }
+        
+        // Copy the remaining elements of the left subarray
+        while (i <= mid) {
+            temp[k++] = nums[i++];
+        }
+        
+        // Copy the remaining elements of the right subarray
+        while (j <= ei) {
+            temp[k++] = nums[j++];
+        }
+        
+        // Copy the merged elements back into the original array
+        for (i = si; i <= ei; i++) {
+            nums[i] = temp[i];
+        }
+
+        return count;
+    }
+}

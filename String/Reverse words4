@@ -1,0 +1,22 @@
+class Solution {
+    public String reverseWords(String s) {
+        // Trim leading and trailing spaces and replace multiple spaces with a single space
+        s = s.trim().replaceAll("\\s+", " ");
+        
+        // Split the cleaned string into words
+        String[] str = s.split(" ");
+        int n = str.length;
+
+        // Reverse the array in place
+        for (int i = 0; i < n / 2; i++) {
+            // Swap elements
+            String temp = str[i];
+            str[i] = str[n - i - 1];
+            str[n - i - 1] = temp;
+        }
+
+        // Join the reversed array back into a single string
+        String sentence = String.join(" ", str);
+        return sentence;
+    }
+}

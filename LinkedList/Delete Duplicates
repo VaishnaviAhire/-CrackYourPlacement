@@ -1,0 +1,15 @@
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode curr = head;
+
+        while (curr != null && curr.next != null) { // Use && instead of ||
+            if (curr.val == curr.next.val) { // If duplicate is found
+                curr.next = curr.next.next; // Skip the duplicate node
+            } else {
+                curr = curr.next; // Move to the next node only if no duplicate
+            }
+        }
+
+        return head; // Return the modified list
+    }
+}

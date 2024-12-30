@@ -1,0 +1,27 @@
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        // Handle the case where the head itself has the target value
+        while (head != null && head.val == val) {
+            head = head.next;
+        }
+
+        // Initialize pointers
+        ListNode ptr = head;
+        ListNode prev = null;
+
+        // Traverse the list
+        while (ptr != null) {
+            if (ptr.val == val) {
+                // Remove the current node
+                prev.next = ptr.next;
+            } else {
+                // Move prev to current node only if not removing
+                prev = ptr;
+            }
+            // Move ptr to the next node
+            ptr = ptr.next;
+        }
+
+        return head;
+    }
+}

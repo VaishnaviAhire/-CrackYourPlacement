@@ -1,0 +1,16 @@
+import java.util.Arrays;
+
+class Solution {
+    public int minMoves2(int[] nums) {
+
+        Arrays.sort(nums);
+        int med=nums[nums.length/2];
+        int mov=0;
+        for(int n:nums){
+        mov+=Math.abs(n-med);
+
+        }
+        return mov;
+    }
+}
+

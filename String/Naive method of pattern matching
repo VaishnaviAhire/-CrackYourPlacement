@@ -1,0 +1,25 @@
+
+class Solution {
+    ArrayList<Integer> search(String pattern, String txt) {
+        int m = pattern.length();
+        int n = txt.length();
+        ArrayList<Integer> result = new ArrayList<>();
+        
+        for (int i = 0; i <= n - m; i++) {
+            int j;
+            for (j = 0; j < m; j++) {
+                if (txt.charAt(i + j) != pattern.charAt(j)) {
+                    break;
+                }
+            }
+            if (j == m) {
+                result.add(i + 1); // Adding 1 to convert to 1-based indexing
+            }
+        }
+        
+        return result;
+    }
+}
+
+
+//above is naive method of pattern matching 

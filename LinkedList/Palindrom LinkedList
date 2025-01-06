@@ -1,0 +1,54 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) {
+            return true; // An empty list or a single node is a palindrome.
+        }
+
+        // Step 1: Find the middle of the list
+        ListNode mid = findMid(head);
+
+        // Step 2: Reverse the second half of the list
+        ListNode prev = null;
+        ListNode curr = mid;
+        while (curr != null) {
+            ListNode next = curr.next; // Save next node
+            curr.next = prev;         // Reverse the link
+            prev = curr;              // Move prev forward
+            curr = next;              // Move curr forward
+        }
+
+        // Step 3: Compare the two halves
+        ListNode right = prev; // Start of the reversed second half
+        ListNode left = head;  // Start of the first half
+        while (right != null) { // Only need to compare until the end of the shorter half
+            if (left.val != right.val) {
+                return false; // Mismatch found
+            }
+            left = left.next;
+            right = right.next;
+        }
+
+        return true; // All values matched, it's a palindrome
+    }
+
+    // Helper method to find the middle of the list
+    private ListNode findMid(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;       // Move slow one step
+            fast = fast.next.next; // Move fast two steps
+        }
+        return slow; // Slow will be at the middle node
+    }
+}

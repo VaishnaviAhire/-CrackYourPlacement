@@ -1,0 +1,49 @@
+class Solution {
+    static char[][] fill(char[][] M) {
+        int ROW = M.length;
+        int COL = M[0].length;
+
+        // Mark boundary-connected 'O' as '-'
+        for (int r = 0; r < ROW; r++) {
+            if (M[r][0] == 'O') DFS(M, r, 0);           // Left boundary
+            if (M[r][COL - 1] == 'O') DFS(M, r, COL - 1); // Right boundary
+        }
+
+        for (int c = 0; c < COL; c++) {
+            if (M[0][c] == 'O') DFS(M, 0, c);           // Top boundary
+            if (M[ROW - 1][c] == 'O') DFS(M, ROW - 1, c); // Bottom boundary
+        }
+
+        // Replace all remaining 'O' with 'X', and '-' back to 'O'
+        for (int r = 0; r < ROW; r++) {
+            for (int c = 0; c < COL; c++) {
+                if (M[r][c] == 'O') {
+                    M[r][c] = 'X';
+                } else if (M[r][c] == '-') {
+                    M[r][c] = 'O';
+                }
+            }
+        }
+        return M;
+    }
+
+    static void DFS(char[][] M, int r, int c) {
+        int ROW = M.length;
+        int COL = M[0].length;
+
+        if (r < 0 || c < 0 || r >= ROW || c >= COL || M[r][c] != 'O') {
+            return;
+        }
+
+        M[r][c] = '-'; // Mark as visited
+
+        int[] rNbr = {1, -1, 0, 0};
+        int[] cNbr = {0, 0, 1, -1};
+
+        for (int i = 0; i < 4; i++) {
+            int newR = r + rNbr[i];
+            int newC = c + cNbr[i];
+            DFS(M, newR, newC);
+        }
+    }
+}

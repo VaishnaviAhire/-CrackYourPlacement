@@ -1,0 +1,39 @@
+
+class Solution {
+    public int numIslands(char[][] M) {
+        // Code here
+      int ROW = M.length;
+        int COL = M[0].length;
+        int count = 0;
+
+        for (int r = 0; r < ROW; r++) {
+            for (int c = 0; c < COL; c++) {
+                if (M[r][c] == '1') {
+                    count++;
+                    DFS(M, r, c);
+                }
+            }
+        }
+        return count;
+    }
+    
+ void DFS(char[][] M, int r, int c) {
+        int ROW = M.length;
+        int COL = M[0].length;
+
+        if (r < 0 || c < 0 || r >= ROW || c >= COL || M[r][c] != '1') {
+            return;
+        }
+
+        M[r][c] = '0';
+             //down,up,right,left,bottom right,top left,bottom left,top right
+  int[] rNbr = {1,  -1,  0,    0,      1,        -1,         1,       -1};
+   int[] cNbr = {0,  0,  1,   -1,      1,        -1,        -1,        1};
+
+        for (int i = 0; i < 8; ++i) {
+            int newR = r + rNbr[i];
+            int newC = c + cNbr[i];
+            DFS(M, newR, newC);
+        }
+    }
+}
